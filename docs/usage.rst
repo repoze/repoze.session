@@ -19,6 +19,12 @@ applications:
    :linenos:
    :language: python
 
+The value you send in to the session manager's ``get`` method should
+be a value you've managed to assign to a particular user, perhaps via
+a cookie.  See :term:`repoze.browserid` for a library that manages
+browser identifiers.  These identifiers can be used as session manager
+keys.
+
 Using Begin and End Subscribers
 -------------------------------
 
@@ -29,12 +35,6 @@ session.
 .. literalinclude:: code/subscribers.py
    :linenos:
    :language: python
-
-The value you send in to the session manager's ``get`` method should
-be a value you've managed to assign to a particular user, perhaps via
-a cookie.  See :term:`repoze.browserid` for a library that manages
-browser identifiers.  These identifiers can be used as session manager
-keys.
 
 Gotchas
 -------
