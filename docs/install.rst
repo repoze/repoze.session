@@ -10,7 +10,7 @@ done primarily under Python 2.4, so that version is recommended.
 :mod:`repoze.session` does *not* run under any version of Python
 before 2.4, and does *not* run under Python 3.X.
 
-.. warning:: To succesfully install :mod:`repoze.catalog`, you will an
+.. warning:: To succesfully install :mod:`repoze.session`, you will an
    environment capable of compiling Python C code.  See the
    documentation about installing, e.g. ``gcc`` and ``python-devel``
    for your system.  You will also need :term:`setuptools` installed
@@ -20,7 +20,7 @@ before 2.4, and does *not* run under Python 3.X.
 It is advisable to install :mod:`repoze.session` into a
 :term:`virtualenv` in order to obtain isolation from any "system"
 packages you've got installed in your Python version (and likewise, to
-prevent :mod:`repoze.catalog` from globally installing versions of
+prevent :mod:`repoze.session` from globally installing versions of
 packages that are not compatible with your system Python).
 
 After you've got the requisite dependencies installed, you may install
