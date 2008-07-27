@@ -47,13 +47,11 @@ setup(name='repoze.session',
       namespace_packages=['repoze'],
       zip_safe=False,
       tests_require = [
-        'repoze.browserid',
         'zope.component',
         'zope.event',
         'ZODB3',
         ],
       install_requires = [
-        'repoze.browserid',
         'zope.component',
         'zope.event',
         'ZODB3',
