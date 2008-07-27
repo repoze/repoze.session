@@ -42,3 +42,6 @@ Glossary
     A concrete period of time which, in the case of
     :mod:`repoze.session` is used to compute whether a particular
     session data object is still valid.
+  repoze.browserid
+    A `library <http://pypi.python.org/pypi/repoze.browserid/0.1>`_
+    which assigns unique identifiers to website visitors via cookies.
