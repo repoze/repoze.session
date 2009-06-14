@@ -32,3 +32,10 @@ class SerializationTests(unittest.TestCase):
 
         # Efficient pickling uses list repr
         self.failUnless(dumped_data[4:-1] in dumped_node)
+
+    def test_repr(self):
+        from repoze.session import linkedlist
+        testseq = [1]
+        node = linkedlist.deserialize(testseq)
+        self.failUnless(repr(node).startswith('<ListNode object'))
+        

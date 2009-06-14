@@ -166,6 +166,11 @@ class TestSessionData(unittest.TestCase):
         sdo.last_modified = when
         self.assertEqual(sdo.last_modified, when)
 
+    def test_set_last_modified_None(self):
+        sdo = self._makeOne()
+        sdo.last_modified = None
+        self.failIf(sdo.last_modified is None)
+
     def test_created(self):
         sdo = self._makeOne()
         import time
@@ -198,6 +203,7 @@ class TestSessionData(unittest.TestCase):
 
     def test_copy(self):
         sdo = self._makeOne()
+        sdo._iv = True
         sdo2 = sdo.copy()
         self.assertEqual(sdo.data, sdo2.data)
         self.assertEqual(sdo.is_valid(), sdo2.is_valid())

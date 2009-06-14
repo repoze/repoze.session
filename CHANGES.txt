@@ -1,4 +1,10 @@
-0.1
+Next release
+------------
 
-  Initial release.
+- 100% test coverage.
+
+0.1
+---
+
+- Initial release.
 

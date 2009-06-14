@@ -519,6 +519,12 @@ class SessionDataManagerTests(unittest.TestCase, PlacelessSetup):
         self.assertEqual(len(stuff), 3)
         self.assertEqual(stuff[2], c)
 
+
+    def test_notify_end_with_current_buckets(self):
+        sdc = self._makeOne(30, 1, when=1)
+        sdc.notify_end(None, current_buckets=[{'a':1}, {'b':2}])
+        
+
 class TestFileStorageSessionManagerFactory(unittest.TestCase):
     def _getTargetClass(self):
         from repoze.session.manager import FileStorageSessionManagerFactory
@@ -590,6 +596,19 @@ class TestConnectioManager(unittest.TestCase):
         manager(conn)
         manager.commit(txn)
         self.assertEqual(txn.committed, True)
+
+class TestTimeslice(unittest.TestCase):
+    def _callFUT(self, period, when=None):
+        from repoze.session.manager import timeslice
+        return timeslice(period, when)
+
+    def test_it_when_None(self):
+        result = self._callFUT(60)
+        self.assertEqual(type(result), float)
+
+    def test_it_when_supplied(self):
+        result = self._callFUT(60, 600)
+        self.assertEqual(result, 600)
 
 class DummyConnection:
     def close(self):
