@@ -1,7 +1,14 @@
-Next release
-------------
+repoze.session
+==============
+
+0.2
+---
 
 - 100% test coverage.
+
+- Changed index location.
+
+- Pointed to docs in README.txt
 
 0.1
 ---
