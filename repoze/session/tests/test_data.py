@@ -95,7 +95,7 @@ class TestSessionData(unittest.TestCase):
             del uu2[0]
         except KeyError:
             pass
-        else:
+        else: # pragma: no cover
             raise ValueError("uu2[0] shouldn't be deletable")
 
         # Test __contains__
@@ -135,7 +135,7 @@ class TestSessionData(unittest.TestCase):
             u2.pop(1)
         except KeyError:
             pass
-        else:
+        else: # pragma: no cover
             raise ValueError("1 should not be poppable from u2")
 
         x = u2.pop(1, 7)
