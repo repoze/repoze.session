@@ -93,7 +93,8 @@ class SessionDataManager(Persistent):
             if self.nonlazy:
                 self.set(key, sdo, when)
             else:
-                t.addBeforeCommitHook(self.set_if_modified, (key, sdo, when))
+                lm = sdo.last_modified
+                t.addBeforeCommitHook(self.set_if_modified,(key, sdo, lm, when))
 
             notify(SessionBeginEvent(sdo))
 
@@ -203,8 +204,10 @@ class SessionDataManager(Persistent):
         head_ts, bucket = head.ob
         bucket[k] = v
 
-    def set_if_modified(self, k, v, when=None):
-        if v.last_modified is not None:
+    def set_if_modified(self, k, v, old_lm, when=None):
+        if v.last_modified is None:
+            return
+        if v.last_modified != old_lm:
             self.set(k, v, when)
 
     # Conflict resolution

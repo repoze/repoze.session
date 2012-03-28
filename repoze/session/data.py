@@ -16,6 +16,8 @@ def manage_modified(wrapped):
         return wrapped(self, *arg, **kw)
     return set_modified
 
+_marker = object()
+
 class SessionData(PersistentMapping):
     """ Dictionary-like object that supports additional methods and
     attributes concerning invalidation. expiration and conflict
@@ -28,8 +30,7 @@ class SessionData(PersistentMapping):
     # so.
 
     # _lm (last modified) indicates the last time that __setitem__,
-    # __delitem__, update, clear, setdefault, pop, or popitem was
-    # called on us.
+    # __delitem__, update, clear, pop, or popitem was called on us.
     _lm = None
     
     # _iv indicates that this node is invalid if true.
@@ -44,11 +45,19 @@ class SessionData(PersistentMapping):
 
     clear = manage_modified(PersistentMapping.clear)
     update = manage_modified(PersistentMapping.update)
-    setdefault = manage_modified(PersistentMapping.setdefault)
     pop = manage_modified(PersistentMapping.pop)
     popitem = manage_modified(PersistentMapping.popitem)
     __setitem__ = manage_modified(PersistentMapping.__setitem__)
     __delitem__ = manage_modified(PersistentMapping.__delitem__)
+
+    # don't cause a modification unless necessary in setdefault
+
+    def setdefault(self, k, default=None):
+        result = self.get(k, _marker)
+        if result is not _marker:
+            return result
+        self[k] = default
+        return default
 
     # "Smarter" copy (part of IMapping interface)
 

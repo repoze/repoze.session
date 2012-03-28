@@ -8,6 +8,13 @@ Next release
 
 - Updated docs/testing regime.
 
+- Lazier commit behavior: try to compare session data last modified to old
+  last modified; only reset the session data to the head if the modification
+  times differ.
+
+- Don't set last_modified in session data setdefault unless ``get`` returns
+  the marker.
+
 0.2
 ---
 

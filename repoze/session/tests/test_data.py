@@ -118,6 +118,9 @@ class TestSessionData(unittest.TestCase):
 
         # Test setdefault
 
+        x = u2.setdefault('yum')
+        eq(x, None, "u2.setdefault('yum') == None")
+
         x = u2.setdefault(0, 5)
         eq(x, 0, "u2.setdefault(0, 5) == 0")
 

@@ -441,11 +441,18 @@ class SessionDataManagerTests(unittest.TestCase, PlacelessSetup):
     def test_set_if_modified(self):
         root = self._makeOne(30, 1)
         sdo = root.get('a')
-        root.set_if_modified('a', sdo)
+        root.set_if_modified('a', sdo, 0)
         self.failIf(sdo is root.get('a'))
         sdo['foo'] = 'bar'
-        root.set_if_modified('a', sdo)
+        root.set_if_modified('a', sdo, 0)
         self.failIf(sdo is not root.get('a'))
+
+    def test_set_if_modified_short_circuit(self):
+        root = self._makeOne(30, 1)
+        sdo = root.get('a')
+        sdo.last_modified = 123
+        root.set_if_modified('a', sdo, 123)
+        self.failIf(sdo is root.get('a'))
 
     def test_laziness(self):
         import transaction
@@ -457,7 +464,7 @@ class SessionDataManagerTests(unittest.TestCase, PlacelessSetup):
         for hook in hooks:
             self.assertEqual(hook[0].im_func.func_code,
                              root.set_if_modified.im_func.func_code)
-            self.assertEqual(hook[1], ('a', sdo, None)) # *arg
+            self.assertEqual(hook[1], ('a', sdo, None, None)) # *arg
             self.assertEqual(hook[2], {})   # **kw
 
         t.abort() # clear commit hooks
