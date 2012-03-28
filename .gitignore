@@ -1,0 +1,12 @@
+*.egg
+*.egg-info
+*.pyc
+*~
+.coverage
+.tox/
+nosetests.xml
+repoze/session/coverage.xml
+tutorial.db
+build/
+dist/
+env*/

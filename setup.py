@@ -12,21 +12,28 @@
 #
 ##############################################################################
 
-__version__ = '0.2'
-
 import os
-
-from ez_setup import use_setuptools
-use_setuptools()
 
 from setuptools import setup, find_packages
 
+install_requires = [
+        'zope.component',
+        'zope.event',
+        'ZODB3',
+        ]
+
+testing_extras = ['nose', 'coverage']
+docs_extras = ['Sphinx']
+
 here = os.path.abspath(os.path.dirname(__file__))
-README = open(os.path.join(here, 'README.txt')).read()
-CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
+try:
+    README = open(os.path.join(here, 'README.txt')).read()
+    CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
+except:
+    README = CHANGES = ''
 
 setup(name='repoze.session',
-      version=__version__,
+      version='0.2',
       description='Sessioning for web applications',
       long_description=README + '\n\n' +  CHANGES,
       classifiers=[
@@ -46,18 +53,12 @@ setup(name='repoze.session',
       include_package_data=True,
       namespace_packages=['repoze'],
       zip_safe=False,
-      tests_require = [
-        'zope.component',
-        'zope.event',
-        'ZODB3',
-        ],
-      install_requires = [
-        'zope.component',
-        'zope.event',
-        'ZODB3',
-        ],
+      install_requires = install_requires,
       test_suite="repoze.session.tests",
       entry_points = """\
-      """
+      """,
+      extras_require = {
+          'testing':testing_extras,
+          'docs':docs_extras,
+          },
       )
-
