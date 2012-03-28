@@ -1,6 +1,13 @@
 repoze.session
 ==============
 
+Next release
+------------
+
+- Moved to GitHub.
+
+- Updated docs/testing regime.
+
 0.2
 ---
 
