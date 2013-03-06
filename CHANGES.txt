@@ -1,8 +1,15 @@
 repoze.session
 ==============
 
-Next release
-------------
+1.0a1
+-----
+
+- Added support for Python 3.3.
+
+- Replaced deprecated ``zope.interface.implements`` usage with equivalent
+  ``zope.interface.implementer`` decorator.
+
+- Dropped support for Python 2.4 and 2.5.
 
 - Moved to GitHub.
 

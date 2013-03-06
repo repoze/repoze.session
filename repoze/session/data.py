@@ -1,7 +1,7 @@
 import pprint
 import time
 
-from zope.interface import implements
+from zope.interface import implementer
 from ZODB.POSException import ConflictError
 
 from persistent.mapping import PersistentMapping
@@ -18,11 +18,11 @@ def manage_modified(wrapped):
 
 _marker = object()
 
+@implementer(ISessionData)
 class SessionData(PersistentMapping):
     """ Dictionary-like object that supports additional methods and
     attributes concerning invalidation. expiration and conflict
     resolution."""
-    implements(ISessionData)
 
     # Note that we use short instance variable names here to reduce
     # instance pickle sizes, as these items are written quite often to
@@ -32,7 +32,7 @@ class SessionData(PersistentMapping):
     # _lm (last modified) indicates the last time that __setitem__,
     # __delitem__, update, clear, pop, or popitem was called on us.
     _lm = None
-    
+
     # _iv indicates that this node is invalid if true.
     _iv = False
 

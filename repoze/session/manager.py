@@ -6,7 +6,7 @@ from persistent import Persistent
 import transaction
 from ZODB.POSException import ConflictError
 
-from zope.interface import implements
+from zope.interface import implementer
 from zope.event import notify
 
 from repoze.session.interfaces import ISessionBeginEvent
@@ -19,26 +19,26 @@ from repoze.session.linkedlist import ListNode
 from repoze.session.data import SessionData
 
 
+@implementer(ISessionBeginEvent)
 class SessionBeginEvent(object):
     """ An event that is sent via ``zope.event.notify`` when a session begins.
     """
-    implements(ISessionBeginEvent)
     def __init__(self, session):
         self.session = session
 
+@implementer(ISessionEndEvent)
 class SessionEndEvent(object):
     """ An event that is sent via ``zope.event.notify`` when a session ends.
     """
-    implements(ISessionEndEvent)
     def __init__(self, session):
         self.session = session
 
 _marker = ()
 
+@implementer(ISessionDataManager)
 class SessionDataManager(Persistent):
     """ An object that manages sessions.
     """
-    implements(ISessionDataManager)
 
     # We have the option of using an OOBTree as a bucket type or an
     # AppendOnlyDict as a bucket type.  With an AppendDict in place,
@@ -48,7 +48,7 @@ class SessionDataManager(Persistent):
     # empirical testing shows that using an OOBTree makes session
     # access faster and produces much smaller pickles, even if its
     # usage does imply tolerating some conflicts.
-        
+
     _BUCKET_TYPE = OOBTree
 
     # Make the data type replaceable for unit tests.
@@ -198,7 +198,7 @@ class SessionDataManager(Persistent):
                 current_keys[k] = v
 
             expired_node = expired_node.next
-            
+
     def set(self, k, v, when=None):
         head = self.get_head(when)
         head_ts, bucket = head.ob
@@ -216,7 +216,7 @@ class SessionDataManager(Persistent):
         oldob       = State(old)
         committedob = State(committed)
         newob       = State(new)
-        
+
         if not oldob.period == committedob.period == newob.period:
             raise ConflictError('Conflicting periods')
 
@@ -255,7 +255,7 @@ def _prefix(newer, ts, include_match=False):
         result.append(newer.ob)
         newer = newer.next
     return result
-    
+
 def _head_and_tail(root):
     head = tail = root.head
     while tail and tail.next is not None:
@@ -301,7 +301,7 @@ class FileStorageSessionManagerFactory(SessionManagerFactory):
 
     def __del__(self):
         self.db.close()
-        
+
 class ConnectionManager(object):
     """ An object willing to manage a ZODB database connection """
     def __call__(self, conn):

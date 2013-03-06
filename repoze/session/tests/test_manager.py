@@ -456,14 +456,14 @@ class SessionDataManagerTests(unittest.TestCase, PlacelessSetup):
 
     def test_laziness(self):
         import transaction
+        from repoze.session._compat import get_code
         root = self._makeOne(30, 1)
         sdo = root.get('a')
         t = transaction.get()
         hooks = list(t.getBeforeCommitHooks())
         self.failUnless(hooks)
         for hook in hooks:
-            self.assertEqual(hook[0].im_func.func_code,
-                             root.set_if_modified.im_func.func_code)
+            self.assertEqual(get_code(hook[0]), get_code(root.set_if_modified))
             self.assertEqual(hook[1], ('a', sdo, None, None)) # *arg
             self.assertEqual(hook[2], {})   # **kw
 

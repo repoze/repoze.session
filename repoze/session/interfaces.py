@@ -60,4 +60,4 @@ class ISessionBeginEvent(Interface):
 
 class ISessionEndEvent(Interface):
     """ An interface representing an event that happens when a session ends
-    """    
+    """

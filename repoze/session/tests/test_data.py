@@ -1,4 +1,5 @@
 import unittest
+from repoze.session._compat import PY2
 
 class TestSessionData(unittest.TestCase):
     def _getTargetClass(self):
@@ -37,11 +38,12 @@ class TestSessionData(unittest.TestCase):
         uu1 = SessionDataObject(u1)
         uu2 = SessionDataObject(u2)
 
-        class OtherMapping:
+        class OtherMapping(dict):
             def __init__(self, initmapping):
                 self.__data = initmapping
             def items(self):
                 return self.__data.items()
+
         v0 = SessionDataObject(OtherMapping(u0))
         vv = SessionDataObject([(0, 0), (1, 1)])
 
@@ -50,21 +52,22 @@ class TestSessionData(unittest.TestCase):
 
         eq(str(u0), str(l0))#, "str(u0) == str(l0)")
         eq(repr(u1), repr(l1), "repr(u1) == repr(l1)")
-        eq(`u2`, `l2`, "`u2` == `l2`")
+        eq(repr(u2), repr(l2), "repr(u2) == repr(l2)")
 
-        # Test __cmp__ and __len__
+        if PY2:
+            # Test __cmp__ and __len__
 
-        def mycmp(a, b):
-            r = cmp(a, b)
-            if r < 0: return -1
-            if r > 0: return 1
-            return r
+            def mycmp(a, b):
+                r = cmp(a, b)
+                if r < 0: return -1
+                if r > 0: return 1
+                return r
 
-        all = [l0, l1, l2, u, u0, u1, u2, uu, uu0, uu1, uu2]
-        for a in all:
-            for b in all:
-                eq(mycmp(a, b), mycmp(len(a), len(b)),
-                      "mycmp(a, b) == mycmp(len(a), len(b))")
+            all = [l0, l1, l2, u, u0, u1, u2, uu, uu0, uu1, uu2]
+            for a in all:
+                for b in all:
+                    eq(mycmp(a, b), mycmp(len(a), len(b)),
+                          "mycmp(a, b) == mycmp(len(a), len(b))")
 
         # Test __getitem__
 
@@ -146,7 +149,7 @@ class TestSessionData(unittest.TestCase):
 
         # Test popitem
 
-        items = u2.items()
+        items = list(u2.items())
         key, value = u2.popitem()
         self.failUnless((key, value) in items, "key, value in items")
         self.failUnless(key not in u2, "key not in u2")
@@ -241,6 +244,6 @@ class TestSessionData(unittest.TestCase):
         result = sdo._p_resolveConflict(old, committed, new)
         self.assertEqual(result, {'_container': 1, '_lm': 1})
 
-    
 
-    
+
+

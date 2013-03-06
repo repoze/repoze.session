@@ -17,9 +17,12 @@ import os
 from setuptools import setup, find_packages
 
 install_requires = [
+        'persistent',
+        'transaction',
         'zope.component',
         'zope.event',
-        'ZODB3',
+        'zope.interface',
+        'ZODB',
         ]
 
 testing_extras = ['nose', 'coverage']
@@ -33,13 +36,19 @@ except:
     README = CHANGES = ''
 
 setup(name='repoze.session',
-      version='0.2',
+      version='1.0a1',
       description='Sessioning for web applications',
       long_description=README + '\n\n' +  CHANGES,
       classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.6",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: Implementation :: CPython",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
         "Topic :: Internet :: WWW/HTTP :: WSGI",
