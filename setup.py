@@ -19,9 +19,9 @@ from setuptools import setup, find_packages
 install_requires = [
         'persistent',
         'transaction',
-        'zope.component',
         'zope.event',
         'zope.interface',
+        'zope.component',
         'ZODB',
         ]
 
