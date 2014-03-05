@@ -12,7 +12,7 @@
 #
 ##############################################################################
 
-__version__ = '0.1'
+__version__ = '0.1.1'
 
 import os
 
@@ -33,6 +33,9 @@ setup(name='repoze.session',
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
         "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.6",
+        "Programming Language :: Python :: 2.7",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
         "Topic :: Internet :: WWW/HTTP :: WSGI",
@@ -49,12 +52,12 @@ setup(name='repoze.session',
       tests_require = [
         'zope.component',
         'zope.event',
-        'ZODB3',
+        'ZODB3>=3.9.0',
         ],
       install_requires = [
         'zope.component',
         'zope.event',
-        'ZODB3',
+        'ZODB3>=3.9.0',
         ],
       test_suite="repoze.session.tests",
       entry_points = """\
