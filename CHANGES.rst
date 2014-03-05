@@ -1,5 +1,5 @@
-repoze.session
-==============
+Changelog
+=========
 
 1.0a1
 -----
