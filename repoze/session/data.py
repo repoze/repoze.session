@@ -107,10 +107,12 @@ class SessionData(PersistentMapping):
         if committed['_lm'] != new['_lm']:
             # we are operating against the PersistentMapping.__getstate__
             # representation, which aliases '_container' to self.data.
-            if committed['_container'] != new['_container']:
+            c_data = committed['data']
+            n_data = new['data']
+            if c_data != n_data:
                 msg = "Competing writes to session data: \n%s\n----\n%s" % (
-                        pprint.pformat(committed['_container']),
-                        pprint.pformat(new['_container']))
+                        pprint.pformat(c_data),
+                        pprint.pformat(n_data))
                 raise ConflictError(msg)
 
         resolved = dict(new)

@@ -1,7 +1,8 @@
 import unittest
-from repoze.session._compat import PY2
+
 
 class TestSessionData(unittest.TestCase):
+
     def _getTargetClass(self):
         from repoze.session.data import SessionData
         return SessionData
@@ -20,6 +21,7 @@ class TestSessionData(unittest.TestCase):
         verifyClass(ISessionData, self._getTargetClass())
 
     def test_mapping_interface(self):
+        from repoze.session._compat import PY2
         SessionDataObject = self._getTargetClass()
 
         # this test body mostly stolen from persistent.tests.test_mapping
@@ -216,34 +218,30 @@ class TestSessionData(unittest.TestCase):
         self.assertEqual(sdo.created, sdo2.created)
         self.assertEqual(sdo.last_modified, sdo2.last_modified)
 
-    def test_p_resolveConflict_different_lm_different_container(self):
+    def test_p_resolveConflict_same_lm(self):
+        sdo = self._makeOne()
+        old = {}
+        committed = {'_lm':1, 'data': {'committed': 1}}
+        new       = {'_lm':1, 'data': {'new': 2}}
+        result = sdo._p_resolveConflict(old, committed, new)
+        self.assertEqual(result, {'_lm': 1, 'data': {'new': 2}})
+
+    def test_p_resolveConflict_different_lm_different_data(self):
         from ZODB.POSException import ConflictError
         sdo = self._makeOne()
         old = {}
-        committed = {'_lm':1, '_container':1}
-        new       = {'_lm':2, '_container':2}
+        committed = {'_lm':1, 'data': {'committed': 1}}
+        new       = {'_lm':2, 'data': {'new': 2}}
         self.assertRaises(ConflictError, sdo._p_resolveConflict, old,
                           committed, new)
 
     def test_p_resolveConflict_different_lm_same_container(self):
         sdo = self._makeOne()
         old = {}
-        committed = {'_lm':1, '_container':1, '_la':1, '_iv':1}
-        new       = {'_lm':2, '_container':1, '_la':1, '_iv':1}
+        committed = {'_lm':1, 'data': {'same': 1}, '_la':1, '_iv':1}
+        new       = {'_lm':2, 'data': {'same': 1}, '_la':1, '_iv':1}
         result = sdo._p_resolveConflict(old, committed, new)
         self.assertEqual(
             result,
-            {'_la': 1, '_container': 1, '_lm': 2, '_iv': True}
+            {'_la': 1, 'data': {'same': 1}, '_lm': 2, '_iv': True}
             )
-
-    def test_p_resolveConflict_same_lm(self):
-        sdo = self._makeOne()
-        old = {}
-        committed = {'_lm':1, '_container':1}
-        new       = {'_lm':1, '_container':1}
-        result = sdo._p_resolveConflict(old, committed, new)
-        self.assertEqual(result, {'_container': 1, '_lm': 1})
-
-
-
-
