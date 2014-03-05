@@ -1,4 +1,16 @@
-0.1
+Changelog
+---------
 
-  Initial release.
+0.1.1 (2014-03-05)
+------------------
+
+- Use the 'data' key in conflict resolution:  '_container' hasn't been
+  emitted since ZODB 3.9.0 was released, 2009-09-14.
+
+- Bump ZODB3 dependency to 3.9.0 or later.
+
+0.1 (2008-07-27)
+----------------
+
+- Initial release.
 
