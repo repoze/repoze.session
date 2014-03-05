@@ -590,10 +590,12 @@ class TestConnectioManager(unittest.TestCase):
         self.assertEqual(conn.closed, True)
 
     def test_del(self):
+        import gc
         conn = DummyConnection()
         manager = self._makeOne()
         manager(conn)
         del manager
+        gc.collect()
         self.assertEqual(conn.closed, True)
 
     def test_commit(self):

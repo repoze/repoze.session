@@ -24,6 +24,8 @@ Changelog
 - Drop dependency on 'ZODB3'; depend on separately-released 'ZODB' and
   'persistent' instead.
 
+- Added support for PyPy (any version supported by dependencies).
+
 - Added support for Python 3.2 / 3.3.
 
 - Dropped support for Python 2.4 and 2.5.

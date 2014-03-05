@@ -36,7 +36,7 @@ except:
     README = CHANGES = ''
 
 setup(name='repoze.session',
-      version='1.0a1',
+      version='0.3dev',
       description='Sessioning for web applications',
       long_description=README + '\n\n' +  CHANGES,
       classifiers=[
@@ -50,6 +50,7 @@ setup(name='repoze.session',
         "Programming Language :: Python :: 3.2",
         "Programming Language :: Python :: 3.3",
         "Programming Language :: Python :: Implementation :: CPython",
+        "Programming Language :: Python :: Implementation :: PyPy",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
         "Topic :: Internet :: WWW/HTTP :: WSGI",
