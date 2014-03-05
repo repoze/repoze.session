@@ -1,15 +1,14 @@
 Changelog
 =========
 
-1.0a1
------
+0.3 (unreleased)
+----------------
 
-- Added support for Python 3.3.
+- Dropped use of ``_container`` key in conflict resolution in favor of the
+  ``data`` key used since ZODB 3.9.0.
 
 - Replaced deprecated ``zope.interface.implements`` usage with equivalent
   ``zope.interface.implementer`` decorator.
-
-- Dropped support for Python 2.4 and 2.5.
 
 - Moved to GitHub.
 
@@ -19,11 +18,18 @@ Changelog
   last modified; only reset the session data to the head if the modification
   times differ.
 
-- Don't set last_modified in session data setdefault unless ``get`` returns
-  the marker.
+- Avoid setting ``last_modified`` in ``SessionData.setdefault`` unless the
+  key was actually missing.
 
-0.2
----
+- Drop dependency on 'ZODB3'; depend on separately-released 'ZODB' and
+  'persistent' instead.
+
+- Added support for Python 3.2 / 3.3.
+
+- Dropped support for Python 2.4 and 2.5.
+
+0.2 (2009-07-08)
+----------------
 
 - 100% test coverage.
 
@@ -31,8 +37,7 @@ Changelog
 
 - Pointed to docs in README.txt
 
-0.1
----
+0.1 (2008-07-27)
+----------------
 
 - Initial release.
-
