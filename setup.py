@@ -36,7 +36,7 @@ except:
     README = CHANGES = ''
 
 setup(name='repoze.session',
-      version='0.3dev',
+      version='0.3',
       description='Sessioning for web applications',
       long_description=README + '\n\n' +  CHANGES,
       classifiers=[

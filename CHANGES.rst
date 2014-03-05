@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.3 (unreleased)
+0.3 (2014-03-05)
 ----------------
 
 - Dropped use of ``_container`` key in conflict resolution in favor of the
